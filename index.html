@@ -144,13 +144,16 @@
 
   /* ── MOBILE ── */
   @media(max-width:640px){
-    .lb-header{grid-template-columns:28px 1fr 58px 58px 58px;font-size:9px;padding:6px 8px;}
-    .lb-row{grid-template-columns:28px 1fr 58px 58px 58px;padding:8px 8px;gap:3px;}
-    .lb-header>div:last-child,.lb-row>div:last-child{display:none;}
     .lb-cell{font-size:12px;}
     .lb-cell.total{font-size:18px;}
     .lb-name{font-size:13px;}
-    .avatar-sm{width:32px;height:32px;}
+    .avatar-sm{width:28px;height:28px;border-radius:5px;}
+    /* Leaderboard mobile: override inline grid, hide Avg */
+    .lb-header,.lb-row{grid-template-columns:26px 1fr 52px 68px 54px 0 !important;gap:2px !important;}
+    .lb-header>div:last-child,.lb-row>div:last-child{display:none !important;}
+    .lb-header{font-size:9px !important;padding:6px 8px !important;}
+    .lb-row{padding:8px 8px !important;}
+    .lb-rank{font-size:16px !important;}
     .match-header{grid-template-columns:1fr 46px 46px 46px 52px;font-size:9px;padding:5px 8px;}
     .match-row{grid-template-columns:1fr 46px 46px 46px 52px;padding:7px 8px;}
     .pts-cell{font-size:12px;}
@@ -580,7 +583,7 @@ function renderLeaderboard(){
     <span>⚽ Live top scorer:</span><strong>${escHtml(topScorerLabel)}</strong><span style="color:var(--text3)">— το (+x) στη στήλη Special είναι προσωρινό, δεν μετράει στο σύνολο</span>
   </div>`:''}
   <div class="card" style="padding:0;overflow:hidden"><div class="table-scroll">
-  <div class="lb-header" style="grid-template-columns:36px 1fr 70px 80px 70px 52px"><div>#</div><div>Player</div><div style="text-align:center">Match pts</div><div style="text-align:center">Special pts</div><div style="text-align:center">Total</div><div style="text-align:center">Avg</div></div>`;
+  <div class="lb-header" style="grid-template-columns:30px 1fr 62px 72px 62px 48px;padding:7px 10px;font-size:10px;"><div>#</div><div>Player</div><div style="text-align:center">Match</div><div style="text-align:center">Special</div><div style="text-align:center">Total</div><div style="text-align:center">Avg</div></div>`;
   
   rows.forEach((r,i)=>{
     const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
@@ -590,7 +593,7 @@ function renderLeaderboard(){
       ?`<span style="color:#f5a830;font-style:italic;font-size:13px">(+${r.liveScorerPts})</span>`
       :`${r.specialPts}`;
     const specialCell=`<div class="lb-cell">${specialDisplay}</div>`;
-    html+=`<div class="lb-row" style="grid-template-columns:36px 1fr 70px 80px 70px 52px"><div class="lb-rank ${rc}">${i+1}</div><div class="player-cell">${av}<span class="lb-name" style="cursor:pointer;text-decoration:underline;text-decoration-color:rgba(240,208,80,0.4);text-underline-offset:3px;" onclick="openBio('${escHtml(r.player)}',${r.total})">${escHtml(r.player)}</span></div><div class="lb-cell">${r.matchPts}</div>${specialCell}<div class="lb-cell total">${r.total}</div><div class="lb-cell">${avg}</div></div>`;
+    html+=`<div class="lb-row" style="grid-template-columns:30px 1fr 62px 72px 62px 48px"><div class="lb-rank ${rc}">${i+1}</div><div class="player-cell">${av}<span class="lb-name" style="cursor:pointer;text-decoration:underline;text-decoration-color:rgba(240,208,80,0.4);text-underline-offset:3px;" onclick="openBio('${escHtml(r.player)}',${r.total})">${escHtml(r.player)}</span></div><div class="lb-cell">${r.matchPts}</div>${specialCell}<div class="lb-cell total">${r.total}</div><div class="lb-cell">${avg}</div></div>`;
   });
   html+='</div></div>';
   el.innerHTML=html;
