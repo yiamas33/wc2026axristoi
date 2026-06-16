@@ -623,8 +623,8 @@ function renderRankChart(){
   wrap.innerHTML=`
   <div class="card" style="padding:1rem 1.25rem">
     <div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Πορεία κατάταξης ανά ημέρα</div>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px;font-size:11px;color:var(--text2)">
-      ${[['Mastoras','#e11d48'],['Marosis','#16a34a'],['Litsas','#ca8a04'],['Maretis','#6b7280'],['Roussos','#2563eb'],['Xatzitade','#7c3aed'],['Stratidis','#0ea5e9'],['Voulgaris','#ec4899'],['Pantazis','#ff6b00']].map(([p,c])=>`<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:3px;background:${c};border-radius:2px;display:inline-block"></span>${p}</span>`).join('')}
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px;font-size:13px;color:var(--text2)">
+      ${[['Mastoras','#e11d48'],['Marosis','#16a34a'],['Litsas','#ca8a04'],['Maretis','#6b7280'],['Roussos','#2563eb'],['Xatzitade','#7c3aed'],['Stratidis','#0ea5e9'],['Voulgaris','#ec4899'],['Pantazis','#ff6b00']].map(([p,c])=>`<span style="display:flex;align-items:center;gap:6px"><span style="width:24px;height:4px;background:${c};border-radius:2px;display:inline-block"></span>${p}</span>`).join('')}
     </div>
     <div style="position:relative;width:100%;height:320px">
       <canvas id="rankChartCanvas" role="img" aria-label="Γράφημα πορείας κατάταξης παικτών ανά ημέρα">Mastoras 1ος, Marosis 2ος, Litsas 3ος στις 16/6.</canvas>
@@ -644,18 +644,20 @@ function renderRankChart(){
     const isDark=matchMedia('(prefers-color-scheme: dark)').matches;
     const gridColor=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.06)';
     const tickColor=isDark?'#94a3b8':'#64748b';
-    new Chart(document.getElementById('rankChartCanvas'),{
-      type:'line',
-      data:{labels,datasets:Object.keys(rankData).map(p=>({
+    const datasets=Object.keys(rankData).map(p=>({
         label:p,data:rankData[p],borderColor:colors[p],borderDash:dashes[p],
         backgroundColor:colors[p],borderWidth:2.5,pointRadius:5,pointHoverRadius:7,
-        tension:0.3,fill:false
-      }))},
+        tension:0.3,fill:false,yAxisID:'y'
+      }));
+    new Chart(document.getElementById('rankChartCanvas'),{
+      type:'line',
+      data:{labels,datasets},
       options:{
         responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.dataset.label}: #${ctx.parsed.y}`}}},
         scales:{
           y:{reverse:true,min:1,max:9,ticks:{stepSize:1,color:tickColor,callback:v=>'#'+v},grid:{color:gridColor}},
+          y2:{reverse:true,min:1,max:9,position:'right',ticks:{stepSize:1,color:tickColor,callback:v=>'#'+v},grid:{display:false}},
           x:{ticks:{color:tickColor,autoSkip:false},grid:{color:gridColor}}
         }
       }
