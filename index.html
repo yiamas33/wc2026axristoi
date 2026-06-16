@@ -595,7 +595,7 @@ function renderLeaderboard(){
     const avg=played>0?(r.matchPts/played).toFixed(2):'-';
     const av=(typeof AVATARS !== 'undefined' && AVATARS[r.player])?`<img class="avatar-sm" src="${AVATARS[r.player]}" alt="">`:'';
     const specialDisplay=hasLiveScorer&&r.liveScorerPts>0
-      ?`<span style="color:#f5a830;font-style:italic;font-size:13px">(+${r.liveScorerPts})</span>`
+      ?`<span style="color:#f5a830;font-size:13px">(+${r.liveScorerPts})</span>`
       :`${r.specialPts}`;
     const specialCell=`<div class="lb-cell">${specialDisplay}</div>`;
     // Trend arrow
