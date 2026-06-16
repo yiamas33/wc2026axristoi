@@ -149,7 +149,7 @@
     .lb-name{font-size:13px;}
     .avatar-sm{width:28px;height:28px;border-radius:5px;}
     /* Leaderboard mobile: override inline grid, hide Avg */
-    .lb-header,.lb-row{grid-template-columns:26px 1fr 16px 52px 68px 54px 0 !important;gap:2px !important;}
+    .lb-header,.lb-row{grid-template-columns:26px 1fr 52px 68px 54px 0 !important;gap:2px !important;}
     .lb-header>div:last-child,.lb-row>div:last-child{display:none !important;}
     .lb-header{font-size:9px !important;padding:6px 8px !important;}
     .lb-row{padding:8px 8px !important;}
@@ -588,7 +588,7 @@ function renderLeaderboard(){
     <span>⚽ Live top scorer:</span><strong>${escHtml(topScorerLabel)}</strong><span style="color:var(--text3)">— το (+x) στη στήλη Special είναι προσωρινό, δεν μετράει στο σύνολο</span>
   </div>`:''}
   <div class="card" style="padding:0;overflow:hidden"><div class="table-scroll">
-  <div class="lb-header" style="grid-template-columns:30px 1fr 18px 62px 72px 62px 48px;padding:7px 10px;font-size:10px;"><div>#</div><div>Player</div><div></div><div style="text-align:center">Match</div><div style="text-align:center">Special</div><div style="text-align:center">Total</div><div style="text-align:center">Avg</div></div>`;
+  <div class="lb-header" style="grid-template-columns:30px 1fr 62px 72px 62px 48px;padding:7px 10px;font-size:10px;"><div>#</div><div>Player</div><div style="text-align:center">Match</div><div style="text-align:center">Special</div><div style="text-align:center">Total</div><div style="text-align:center">Avg</div></div>`;
   
   rows.forEach((r,i)=>{
     const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
@@ -607,7 +607,7 @@ function renderLeaderboard(){
       else if(currRank>prevRank) trendHtml=`<span style="color:#ef4444;font-size:14px;line-height:1;">▼</span>`;
       else trendHtml=`<span style="color:#eab308;font-size:12px;line-height:1;">●</span>`;
     }
-    html+=`<div class="lb-row" style="grid-template-columns:30px 1fr 18px 62px 72px 62px 48px"><div class="lb-rank ${rc}">${i+1}</div><div class="player-cell">${av}<span class="lb-name" style="cursor:pointer;text-decoration:underline;text-decoration-color:rgba(240,208,80,0.4);text-underline-offset:3px;" onclick="openBio('${escHtml(r.player)}',${r.total})">${escHtml(r.player)}${yellowCard(r.player)}</span></div><div style="display:flex;align-items:center;justify-content:center;">${trendHtml}</div><div class="lb-cell">${r.matchPts}</div>${specialCell}<div class="lb-cell total">${r.total}</div><div class="lb-cell">${avg}</div></div>`;
+    html+=`<div class="lb-row" style="grid-template-columns:30px 1fr 62px 72px 62px 48px"><div class="lb-rank ${rc}">${i+1}</div><div class="player-cell">${av}<span class="lb-name" style="cursor:pointer;text-decoration:underline;text-decoration-color:rgba(240,208,80,0.4);text-underline-offset:3px;" onclick="openBio('${escHtml(r.player)}',${r.total})">${escHtml(r.player)}${yellowCard(r.player)}</span>${trendHtml?`<span style="flex-shrink:0">${trendHtml}</span>`:''}</div><div class="lb-cell">${r.matchPts}</div>${specialCell}<div class="lb-cell total">${r.total}</div><div class="lb-cell">${avg}</div></div>`;
   });
   html+='</div></div>';
   el.innerHTML=html;
