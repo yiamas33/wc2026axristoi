@@ -706,7 +706,7 @@ function renderNextMatches(){
     };
     return parseDate(a)-parseDate(b);
   });
-  const upcoming=sorted.filter(m=>!getResult(m.id)?.outcome).slice(0,8);
+  const upcoming=sorted.filter(m=>!getResult(m.id)?.outcome).slice(0,4);
   if(upcoming.length===0){el.innerHTML='';return;}
   const players=data.players||[];
   let html=`<div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Next Games</div>
