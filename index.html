@@ -422,10 +422,10 @@ const MATCHES = [
   {id:94, phase:"Round of 16", group:"", date:"Jul 7", time:"03:00", t1:"USA", t2:"Belgium"},
   {id:95, phase:"Round of 16", group:"", date:"Jul 7", time:"19:00", t1:"Argentina", t2:"Egypt"},
   {id:96, phase:"Round of 16", group:"", date:"Jul 7", time:"23:00", t1:"Switzerland", t2:"Colombia"},
-  {id:97, phase:"Quarter-final", group:"", date:"Jul 8", time:"22:00", t1:"TBD", t2:"TBD"},
-  {id:98, phase:"Quarter-final", group:"", date:"Jul 8", time:"22:00", t1:"TBD", t2:"TBD"},
-  {id:99, phase:"Quarter-final", group:"", date:"Jul 9", time:"01:00", t1:"TBD", t2:"TBD"},
-  {id:100, phase:"Quarter-final", group:"", date:"Jul 9", time:"01:00", t1:"TBD", t2:"TBD"},
+  {id:97, phase:"Quarter-final", group:"", date:"Jul 9", time:"23:00", t1:"France", t2:"Morocco"},
+  {id:98, phase:"Quarter-final", group:"", date:"Jul 10", time:"22:00", t1:"Spain", t2:"Belgium"},
+  {id:99, phase:"Quarter-final", group:"", date:"Jul 12", time:"00:00", t1:"Norway", t2:"England"},
+  {id:100, phase:"Quarter-final", group:"", date:"Jul 12", time:"04:00", t1:"Argentina", t2:"Switzerland"},
   {id:101, phase:"Semi-final", group:"", date:"Jul 11", time:"22:00", t1:"TBD", t2:"TBD"},
   {id:102, phase:"Semi-final", group:"", date:"Jul 12", time:"22:00", t1:"TBD", t2:"TBD"},
   {id:103, phase:"3rd Place", group:"", date:"Jul 18", time:"22:00", t1:"TBD", t2:"TBD"},
@@ -706,7 +706,7 @@ function renderNextMatches(){
     };
     return parseDate(a)-parseDate(b);
   });
-  const upcoming=sorted.filter(m=>!getResult(m.id)?.outcome).slice(0,0);
+  const upcoming=sorted.filter(m=>!getResult(m.id)?.outcome&&m.t1!=='TBD').slice(0,4);
   if(upcoming.length===0){el.innerHTML='';return;}
   const players=data.players||[];
   let html=`<div style="font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Next Games</div>
