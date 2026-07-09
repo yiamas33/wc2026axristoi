@@ -319,44 +319,7 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeBio(); });
 
     <!-- MEMORABILIA -->
     <div id="page-memorabilia" class="page">
-      <div class="section-title">Memorabilia</div>
-      <p class="section-sub">Coming soon.</p>
-      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 0 3rem;">
-        <div style="position:relative;max-width:680px;width:100%;">
-          <div style="background:#000;border-radius:16px;overflow:hidden;aspect-ratio:16/6;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 48px rgba(0,0,0,0.7);position:relative;">
-            <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 680 255" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" opacity="0.2">
-              <line x1="340" y1="80" x2="390" y2="80" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="390" y1="80" x2="390" y2="28" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="390" y1="28" x2="460" y2="28" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="400" y1="80" x2="400" y2="48" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="400" y1="48" x2="465" y2="48" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="415" y1="80" x2="415" y2="62" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="415" y1="62" x2="468" y2="62" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="350" y1="175" x2="350" y2="228" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="350" y1="228" x2="430" y2="228" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="365" y1="175" x2="365" y2="212" stroke="#38bdf8" stroke-width="1.2"/>
-              <line x1="365" y1="212" x2="445" y2="212" stroke="#38bdf8" stroke-width="1.2"/>
-              <circle cx="390" cy="80" r="3" fill="#38bdf8"/>
-              <circle cx="390" cy="28" r="3" fill="#38bdf8"/>
-              <circle cx="400" cy="48" r="3" fill="#38bdf8"/>
-              <circle cx="415" cy="62" r="3" fill="#38bdf8"/>
-              <circle cx="350" cy="228" r="3" fill="#38bdf8"/>
-              <circle cx="365" cy="212" r="3" fill="#38bdf8"/>
-              <circle cx="460" cy="28" r="3" fill="#38bdf8"/>
-              <circle cx="465" cy="48" r="3" fill="#38bdf8"/>
-            </svg>
-            <div style="position:relative;z-index:1;text-align:center;padding:0 1.5rem;">
-              <div style="font-family:'Barlow Condensed',sans-serif;font-size:clamp(2rem,7vw,3.8rem);font-weight:700;letter-spacing:0.04em;color:#9ca3af;line-height:1;">
-                memor<span id="memora-glow" style="color:#38bdf8;text-shadow:0 0 16px #38bdf8,0 0 40px #38bdf8aa;font-weight:800;">Ab</span><span style="color:#38bdf8;text-shadow:0 0 16px #38bdf8,0 0 40px #38bdf8aa;font-weight:900;font-style:italic;">I</span>lia
-              </div>
-              <div style="margin-top:1rem;font-family:'Barlow',sans-serif;font-size:clamp(0.65rem,2vw,0.9rem);letter-spacing:0.35em;color:#4b5563;text-transform:uppercase;">— &nbsp;coming soon &nbsp;—</div>
-            </div>
-          </div>
-        </div>
-        <p style="margin-top:1.5rem;font-size:13px;color:var(--text3);text-align:center;max-width:420px;line-height:1.8;">
-          Highlights, στατιστικά και αξιομνημόνευτες στιγμές της διοργάνωσης — φτιαγμένα με <strong style="color:#38bdf8;">AI</strong>, μετά το τέλος του πρωταθλήματος.
-        </p>
-      </div>
+      <img src="memorabilia/memorabilia.png" alt="Memorabilia" style="width:100%;height:auto;border-radius:var(--radius);display:block;">
     </div>
     <!-- PAST WINNERS -->
     <div id="page-pastwinners" class="page">
@@ -508,19 +471,6 @@ function showPage(p,btn){
   if(p==='all-preds'){renderAllPreds();renderNextMatches();}
   if(p==='special')renderSpecial();
   if(p==='leaderboard')renderLeaderboard();
-  if(p==='memorabilia'){
-    // pulse animation για το glow
-    const el=document.getElementById('memora-glow');
-    if(el&&!el._animating){
-      el._animating=true;
-      let t=0;
-      setInterval(()=>{
-        t+=0.05;
-        const intensity=0.7+0.3*Math.sin(t);
-        el.style.textShadow=`0 0 ${16*intensity}px #38bdf8,0 0 ${40*intensity}px #38bdf8aa,0 0 ${80*intensity}px #38bdf855`;
-      },50);
-    }
-  }
 }
 
 function yellowCard(player){
