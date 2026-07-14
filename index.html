@@ -357,14 +357,17 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeBio(); });
 
     <!-- MEMORABILIA -->
     <div id="page-memorabilia" class="page">
-      <div class="section-title">📸 Το Λεύκωμα</div>
+      <div class="section-title">📸 ΤΟ ΛΕΥΚΩΜΑ</div>
       <div class="memo-intro">...στιγμιότυπα από το μουντιάλ που ποτέ δεν έγιναν, αλλά έπρεπε να έχουν γίνει....</div>
 
-      <div class="memo-section-label">Οι Άχρηστοι</div>
+      <div class="memo-section-label">ΟΙ ΑΧΡΗΣΤΟΙ</div>
       <div class="avatar-strip" id="avatar-strip"></div>
 
-      <div class="memo-section-label">AI-ώνιοι Κουβάδες</div>
+      <div class="memo-section-label">AI-ΩΝΙΟΙ ΚΟΥΒΑΔΕΣ</div>
       <div class="memo-wall" id="memo-wall"></div>
+
+      <div class="memo-section-label">ΧΑΤΖΗΤΑΔΕ - SPECIAL EDITION</div>
+      <div class="memo-wall" id="memo-wall-xatzi"></div>
     </div>
 
     <div class="memo-lightbox" id="memo-lightbox" onclick="if(event.target===this)closeLightbox()">
@@ -513,28 +516,40 @@ function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt
 const MEMORABILIA=[
   {img:"memorabilia/team.png"},
   {img:"memorabilia/admins.png"},
-  {img:null},{img:null},{img:null},{img:null},{img:null},
+  {img:"memorabilia/redcard.png"},
+  {img:null},{img:null},{img:null},{img:null},
   {img:null},{img:null},{img:null},{img:null},{img:null}
 ];
+const XATZI_MEMORABILIA=[
+  {img:"memorabilia/xatzitade1.png"},
+  {img:"memorabilia/xatzitade2.png"},
+  {img:"memorabilia/xatzitade3.png"},
+  {img:"memorabilia/xatzitade4.png"}
+];
+const GALLERIES={main:MEMORABILIA, xatzi:XATZI_MEMORABILIA};
+
+function renderWall(containerId, gallery, galleryName){
+  const wall=document.getElementById(containerId);
+  if(!wall || wall.dataset.rendered)return;
+  wall.innerHTML=gallery.map((m,i)=>{
+    if(!m.img){
+      return `<div class="memo-card memo-card-soon">
+        <div class="memo-pin"></div>
+        <div class="memo-placeholder"><span class="ic">⚽</span><span class="tx">Έρχεται σύντομα</span></div>
+      </div>`;
+    }
+    return `<div class="memo-card" tabindex="0" role="button" aria-label="Μεγέθυνση εικόνας" onclick="openLightbox('${galleryName}',${i})" onkeydown="if(event.key==='Enter')openLightbox('${galleryName}',${i})">
+      <div class="memo-pin"></div>
+      <img class="memo-img" src="${escHtml(m.img)}" alt=""
+           onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'memo-placeholder',innerHTML:'<span class=&quot;ic&quot;>⚽</span><span class=&quot;tx&quot;>Έρχεται σύντομα</span>'}))">
+    </div>`;
+  }).join('');
+  wall.dataset.rendered='1';
+}
 
 function renderMemorabilia(){
-  const wall=document.getElementById('memo-wall');
-  if(wall && !wall.dataset.rendered){
-    wall.innerHTML=MEMORABILIA.map((m,i)=>{
-      if(!m.img){
-        return `<div class="memo-card memo-card-soon">
-          <div class="memo-pin"></div>
-          <div class="memo-placeholder"><span class="ic">⚽</span><span class="tx">Έρχεται σύντομα</span></div>
-        </div>`;
-      }
-      return `<div class="memo-card" tabindex="0" role="button" aria-label="Μεγέθυνση εικόνας" onclick="openLightbox(${i})" onkeydown="if(event.key==='Enter')openLightbox(${i})">
-        <div class="memo-pin"></div>
-        <img class="memo-img" src="${escHtml(m.img)}" alt=""
-             onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'memo-placeholder',innerHTML:'<span class=&quot;ic&quot;>⚽</span><span class=&quot;tx&quot;>Έρχεται σύντομα</span>'}))">
-      </div>`;
-    }).join('');
-    wall.dataset.rendered='1';
-  }
+  renderWall('memo-wall', MEMORABILIA, 'main');
+  renderWall('memo-wall-xatzi', XATZI_MEMORABILIA, 'xatzi');
   const strip=document.getElementById('avatar-strip');
   if(strip && !strip.dataset.rendered){
     const players=(data && data.players)?data.players:Object.keys(AVATARS);
@@ -547,9 +562,12 @@ function renderMemorabilia(){
 }
 
 let lightboxIndex=0;
-function openLightbox(i){
+let lightboxGallery='main';
+function openLightbox(galleryName,i){
+  lightboxGallery=galleryName;
   lightboxIndex=i;
-  const m=MEMORABILIA[i];
+  const gallery=GALLERIES[galleryName];
+  const m=gallery[i];
   if(!m.img)return;
   document.getElementById('memo-lightbox-img').src=m.img;
   document.getElementById('memo-lightbox-img').alt='';
@@ -563,12 +581,13 @@ function openAvatarLightbox(player){
 }
 function closeLightbox(){document.getElementById('memo-lightbox').classList.remove('open','avatar-mode');}
 function navLightbox(dir){
+  const gallery=GALLERIES[lightboxGallery];
   let next=lightboxIndex;
-  for(let n=0;n<MEMORABILIA.length;n++){
-    next=(next+dir+MEMORABILIA.length)%MEMORABILIA.length;
-    if(MEMORABILIA[next].img){lightboxIndex=next;break;}
+  for(let n=0;n<gallery.length;n++){
+    next=(next+dir+gallery.length)%gallery.length;
+    if(gallery[next].img){lightboxIndex=next;break;}
   }
-  openLightbox(lightboxIndex);
+  openLightbox(lightboxGallery,lightboxIndex);
 }
 document.addEventListener('keydown',function(e){
   const lb=document.getElementById('memo-lightbox');
