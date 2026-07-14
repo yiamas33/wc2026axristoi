@@ -558,10 +558,7 @@ function renderMemorabilia(){
     strip.innerHTML=players.map(p=>`
       <div class="avatar-chip" tabindex="0" role="button" aria-label="${escHtml(p)}" onclick="openAvatarLightbox('${escHtml(p)}')" onkeydown="if(event.key==='Enter')openAvatarLightbox('${escHtml(p)}')">
         <img src="${AVATARS[p]||''}" alt="${escHtml(p)}" onerror="this.style.visibility='hidden'">
-      </div>`).join('') + `
-      <div class="avatar-chip" tabindex="0" role="button" aria-label="Ομαδική φωτογραφία" onclick="openImageLightbox('avatars/all.png','')" onkeydown="if(event.key==='Enter')openImageLightbox('avatars/all.png','')">
-        <img src="avatars/all.png" alt="" onerror="this.style.visibility='hidden'">
-      </div>`;
+      </div>`).join('');
     strip.dataset.rendered='1';
   }
 }
@@ -579,13 +576,10 @@ function openLightbox(galleryName,i){
   document.getElementById('memo-lightbox').classList.remove('avatar-mode');
   document.getElementById('memo-lightbox').classList.add('open');
 }
-function openImageLightbox(path,alt){
-  document.getElementById('memo-lightbox-img').src=path||'';
-  document.getElementById('memo-lightbox-img').alt=alt||'';
-  document.getElementById('memo-lightbox').classList.add('open','avatar-mode');
-}
 function openAvatarLightbox(player){
-  openImageLightbox(AVATARS[player]||'', player);
+  document.getElementById('memo-lightbox-img').src=(AVATARS[player]||'');
+  document.getElementById('memo-lightbox-img').alt=player;
+  document.getElementById('memo-lightbox').classList.add('open','avatar-mode');
 }
 function closeLightbox(){document.getElementById('memo-lightbox').classList.remove('open','avatar-mode');}
 function navLightbox(dir){
