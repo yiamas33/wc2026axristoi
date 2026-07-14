@@ -161,7 +161,8 @@
   .memo-placeholder span.tx{font-size:10px;text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:0 8px;}
 
   .avatar-strip{display:flex;flex-wrap:wrap;gap:clamp(10px,2.5vw,16px);padding:6px 4px 14px;}
-  .avatar-chip{flex-shrink:0;cursor:default;}
+  .avatar-chip{flex-shrink:0;cursor:pointer;}
+  .avatar-chip:focus-visible img{outline:2px solid var(--accent);outline-offset:2px;}
   .avatar-chip img{width:clamp(48px,11vw,76px);height:clamp(48px,11vw,76px);border-radius:50%;object-fit:cover;border:2px solid var(--border2);transition:border-color .15s,transform .15s;display:block;}
   .avatar-chip:hover img{border-color:var(--accent);transform:translateY(-3px);}
 
@@ -537,7 +538,7 @@ function renderMemorabilia(){
   if(strip && !strip.dataset.rendered){
     const players=(data && data.players)?data.players:Object.keys(AVATARS);
     strip.innerHTML=players.map(p=>`
-      <div class="avatar-chip">
+      <div class="avatar-chip" tabindex="0" role="button" aria-label="${escHtml(p)}" onclick="openBio('${escHtml(p)}')" onkeydown="if(event.key==='Enter')openBio('${escHtml(p)}')">
         <img src="${AVATARS[p]||''}" alt="${escHtml(p)}" onerror="this.style.visibility='hidden'">
       </div>`).join('');
     strip.dataset.rendered='1';
