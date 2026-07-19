@@ -755,7 +755,7 @@ function renderLeaderboard(){
     }).join('') + `</div>`;
   }
 
-  const hasLiveScorer=Object.keys(data.results?._scorerGoals||{}).length>0;
+  const hasLiveScorer=Object.keys(data.results?._scorerGoals||{}).length>0 && !data.results?._scorer;
   const goals=data.results?._scorerGoals||{};
   const maxGoals=Object.values(goals).length>0?Math.max(...Object.values(goals)):0;
   const topScorerNames=Object.entries(goals).filter(([,g])=>g===maxGoals).map(([n])=>n);
